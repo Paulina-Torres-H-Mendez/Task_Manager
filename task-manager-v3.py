@@ -160,7 +160,19 @@ def list_tasks(tasks, filter_by=None):
     print()
 
 
+# Sorts tasks by category:
+def sort_tasks_by_category(tasks):
+    """Sorts tasks alphabetically by category"""
+    if not tasks:
+        print("📭 No tasks found!")
+        return
 
+    sorted_tasks = sorted(tasks, key=lambda t: t["category"].lower())  # Sort by category (case-insensitive)
+    print("\n📋 TO-DO LIST (Sorted by Category) 📋")
+    for task in sorted_tasks:
+        status = "✅ Done" if task["completed"] else "❌ Pending"
+        print(f"- {task['title']} [{task['priority']}] ({task['category']}) Due: {task['due_date']} → {status}")
+    print()
 
 
 #                                              Main Menu:
@@ -179,9 +191,10 @@ def main():
         print("8️⃣ Sort by Priority")
         print("9️⃣ Sort by Due Date")
         print("🔟 Remove All Completed Tasks")
+        print("1️⃣1️⃣ Sort by Category")
         print("0️⃣ Exit")
 
-        choice = input("Select an option (0-🔟): ").strip()
+        choice = input("Select an option (0-11): ").strip()
 
         if choice == "1":
             add_task(tasks)
@@ -203,6 +216,8 @@ def main():
             list_tasks(tasks, filter_by="due_date")
         elif choice == "10":
             remove_completed_tasks(tasks)
+        elif choice == "11":
+            sort_tasks_by_category(tasks)
         elif choice == "0":
             print("👋 Exiting. See you next time!")
             break
