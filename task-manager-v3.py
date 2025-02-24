@@ -1,11 +1,12 @@
-import json
+import json # we use JSON files to keep track of the lists as they are easy to use and easy to handle
 from datetime import datetime  # Used for date validation
 
-# File to store tasks
+# creates a file to store tasks
 TASKS_FILE = "tasks.json"
 
+#                                           Functions:
 
-# Load tasks from file
+# Load tasks from file if there is any:
 def load_tasks():
     try:
         with open(TASKS_FILE, "r") as file:
@@ -13,14 +14,12 @@ def load_tasks():
     except (FileNotFoundError, json.JSONDecodeError):
         return []  # Return an empty list if file doesn't exist or is empty
 
-
-# Save tasks to file
+# Saves tasks to the file:
 def save_tasks(tasks):
     with open(TASKS_FILE, "w") as file:
         json.dump(tasks, file, indent=4)
 
-
-# Function to validate priority input
+# Function to validate priority inputs:
 def validate_priority(priority):
     valid_priorities = ["Low", "Medium", "High"]
     if priority not in valid_priorities:
@@ -29,7 +28,7 @@ def validate_priority(priority):
     return True
 
 
-# Function to validate due date input
+# Function to validate due date input:
 def validate_due_date(due_date):
     try:
         due_date_obj = datetime.strptime(due_date, "%Y-%m-%d")  # Convert string to date object
@@ -43,8 +42,7 @@ def validate_due_date(due_date):
         print("⚠ Invalid date format! Please use YYYY-MM-DD. Task creation canceled.")
         return False
 
-
-# Add a new task
+# Adds a new task:
 def add_task(tasks):
     """Adds a new task to the to-do list"""
     title = input("Enter task title: ").strip()
@@ -71,7 +69,7 @@ def add_task(tasks):
     print(f"✅ Task '{title}' added successfully!")
 
 
-# Remove a task
+# Removes a task:
 def remove_task(tasks):
     """Removes a task by title"""
     title = input("Enter task title to remove: ").strip()
@@ -84,7 +82,7 @@ def remove_task(tasks):
     print("⚠ Task not found!")
 
 
-# Remove all completed tasks
+# Removes all completed tasks:
 def remove_completed_tasks(tasks):
     """Removes all completed tasks"""
     initial_count = len(tasks)
@@ -96,7 +94,7 @@ def remove_completed_tasks(tasks):
         print("⚠ No completed tasks to remove!")
 
 
-# Edit a task
+# Edits a task:
 def edit_task(tasks):
     """Edits an existing task"""
     title = input("Enter task title to edit: ").strip()
@@ -126,7 +124,7 @@ def edit_task(tasks):
     print("⚠ Task not found!")
 
 
-# Mark a task as complete
+# Marks a task as complete:
 def mark_task_complete(tasks):
     """Marks a task as completed"""
     title = input("Enter task title to mark as complete: ").strip()
@@ -139,7 +137,7 @@ def mark_task_complete(tasks):
     print("⚠ Task not found!")
 
 
-# List all tasks
+# Lists all tasks:
 def list_tasks(tasks, filter_by=None):
     """Lists tasks, with optional filtering"""
     if not tasks:
@@ -162,7 +160,10 @@ def list_tasks(tasks, filter_by=None):
     print()
 
 
-# Main Menu
+
+
+
+#                                              Main Menu:
 def main():
     tasks = load_tasks()
 
