@@ -140,7 +140,7 @@ def edit_task(tasks):
             else:
                 print("No additional comments currently.")
 
-            new_comments = input("Enter new comments (leave blank to keep existing ones): ").strip()
+            new_comments = input("Enter updated comments (leave blank to keep existing ones): ").strip()
             task["comments"] = new_comments if new_comments else task[
                 "comments"]  # Keep existing comments if left blank
 
