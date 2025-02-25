@@ -60,17 +60,21 @@ def add_task(tasks):
     if not validate_due_date(due_date):
         return  # Cancel task addition if due date is invalid
 
+    additional_comments = input("Enter any additional comments (or leave blank): ").strip()
+
     task = {
         "title": title,
         "category": category,
         "priority": priority,
         "due_date": due_date,
-        "completed": False
+        "completed": False,
+        "comments": additional_comments if additional_comments else None  # Store as None if empty
     }
 
     tasks.append(task)
     save_tasks(tasks)
     print(f"Task '{title}' added successfully!")
+
 
 
 # Removes a task:
@@ -182,6 +186,20 @@ def sort_tasks_by_category(tasks):
         print(f"- {task['title']} [{task['priority']}] ({task['category']}) Due: {task['due_date']} → {status}")
     print()
 
+# View additional comments for a task
+def view_task_comments(tasks):
+    """Displays the additional comments for a task if they exist"""
+    title = input("Enter the task title to view additional comments: ").strip()
+    for task in tasks:
+        if task["title"].lower() == title.lower():
+            if task["comments"]:
+                print(f"\n📌 Additional comments for '{task['title']}':")
+                print(task["comments"])
+            else:
+                print(f"⚠ No additional comments for '{task['title']}'.")
+            return
+    print("⚠ Task not found!")
+
 
 #                                              Main Menu:
 def main():
@@ -201,9 +219,10 @@ def main():
         print("10. Sort by Due Date")
         print("11. Remove All Completed Tasks")
         print("12. Sort by Category")
+        print("13. View Additional Comments for a Task")
         print("0. Exit")
 
-        choice = input("Select an option (0-12): ").strip()
+        choice = input("Select an option (0-13): ").strip()
 
         if choice == "1":
             add_task(tasks)
@@ -229,6 +248,8 @@ def main():
             remove_completed_tasks(tasks)
         elif choice == "12":
             sort_tasks_by_category(tasks)
+        elif choice == "13":
+            view_task_comments(tasks)
         elif choice == "0":
             print("See you next time!")
             break
