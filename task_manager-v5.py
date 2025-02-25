@@ -122,6 +122,7 @@ def edit_task(tasks):
     for task in tasks:
         if task["title"].lower() == title.lower():
             print("Leave blank to keep current value.")
+
             new_title = input(f"New title ({task['title']}): ").strip() or task["title"]
             new_category = input(f"New category ({task['category']}): ").strip() or task["category"]
 
@@ -133,16 +134,29 @@ def edit_task(tasks):
             if new_due_date and not validate_due_date(new_due_date):
                 return  # Cancel update if new date is invalid
 
+            # Ask to edit or add a comment
+            if task["comments"]:
+                print(f"Current comments: {task['comments']}")
+            else:
+                print("No additional comments currently.")
+
+            new_comments = input("Enter new comments (leave blank to keep existing ones): ").strip()
+            task["comments"] = new_comments if new_comments else task[
+                "comments"]  # Keep existing comments if left blank
+
             task.update({
                 "title": new_title,
                 "category": new_category,
                 "priority": new_priority,
-                "due_date": new_due_date
+                "due_date": new_due_date,
+                "comments": task["comments"]
             })
+
             save_tasks(tasks)
             print(f"✏ Task '{new_title}' updated successfully!")
             return
-    print("Task not found!")
+
+    print("⚠ Task not found!")
 
 
 # Marks a task as complete:
