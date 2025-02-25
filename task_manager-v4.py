@@ -28,7 +28,7 @@ def validate_priority(priority):
     return True
 
 
-# Function to validate due date input:
+# Function to validate due date input in DD-MM-YYYY format:
 def validate_due_date(due_date):
     try:
         due_date_obj = datetime.strptime(due_date, "%d-%m-%Y")  # Convert string to date object
