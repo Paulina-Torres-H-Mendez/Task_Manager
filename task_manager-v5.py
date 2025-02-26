@@ -179,6 +179,15 @@ def list_tasks(tasks, filter_by=None):
         print("No tasks found!")
         return
 
+    if filter_by == "incomplete":
+        tasks = [task for task in tasks if not task["completed"]]
+    elif filter_by == "complete":
+        tasks = [task for task in tasks if task["completed"]]
+    elif filter_by == "priority":
+        tasks = sorted(tasks, key=lambda t: t["priority"], reverse=True)
+    elif filter_by == "due_date":
+        tasks = sorted(tasks, key=lambda t: t["due_date"])
+
     print("\n📋 TO-DO LIST 📋")
     for task in tasks:
         status = "Done" if task["completed"] else "Pending"
